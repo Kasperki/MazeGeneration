@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace MazeGeneration
 {
@@ -10,6 +11,16 @@ namespace MazeGeneration
     {
         static void Main(string[] args)
         {
+            //TODO WELCOME MESSAGE - INFO
+
+            //TODO LOOP WHILE EXIT COMMAND
+            //TODO ASK FOR SEED AND MAPSIZE
+
+            Map map = new Map(20,20);
+            map.printMap();
+
+            Console.ReadLine();
+            Console.ReadLine();
         }
     }
 }
