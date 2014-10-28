@@ -44,6 +44,11 @@ namespace MazeGeneration
             neigbours.Add(new Point(cell.X, cell.Y - 1));
             neigbours.Add(new Point(cell.X, cell.Y + 1));
 
+            //Todo Suffle List - Based on vertical / horizontal maze intenisty
+             //Go List Trough ->
+             
+            //Todo Change checkCell to look Xcount cells forward.
+
             while (neigbours.Count > 0)
             {
                 int rnd = rand.Next(0, neigbours.Count);
@@ -54,7 +59,15 @@ namespace MazeGeneration
                 }
                 else if (checkCell(neigbours[rnd], cell) == 1)
                 {
-                    setCell(neigbours[rnd]);
+                    array[neigbours[rnd].X,neigbours[rnd].Y] = 1;
+
+                    int x = neigbours[rnd].X - cell.X;
+                    int y = neigbours[rnd].Y - cell.Y;
+
+                    if (neigbours[rnd].X + x >= 0 && neigbours[rnd].X + x < mapSize.X && neigbours[rnd].Y + y >= 0 && neigbours[rnd].Y + y < mapSize.Y)
+                        setCell(new Point(neigbours[rnd].X + x, neigbours[rnd].Y + y));
+                    else
+                        neigbours.RemoveAt(rnd);
                 }
             }
         }

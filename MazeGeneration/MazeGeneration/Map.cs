@@ -35,7 +35,7 @@ namespace MazeGeneration
             this.mapSizeY = mapSizeY;
             
             DepthFirstSearch dpSearch = new DepthFirstSearch();
-            mapArray = dpSearch.Generate(new Point(mapSizeX, mapSizeY), new Point(5,5));
+            mapArray = dpSearch.Generate(new Point(mapSizeX, mapSizeY), new Point(1,1));
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace MazeGeneration
             {
                 for (int x = 0; x < mapSizeX; x++)
                 {
-                    Console.Write(mapMarks.Substring(mapArray[x, y],1) + " ");
+                    Console.Write(mapMarks.Substring(mapArray[x, y],1) + "");
                     
                     if (x == mapSizeX - 1)
                         Console.Write("\n");
