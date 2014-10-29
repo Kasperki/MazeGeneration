@@ -16,7 +16,7 @@ namespace MazeGeneration
             //TODO LOOP WHILE EXIT COMMAND
             //TODO ASK FOR SEED AND MAPSIZE
 
-            Map map = new Map(30,30);
+            Map map = new Map(60,30);
             map.printMap();
 
             Console.ReadLine();

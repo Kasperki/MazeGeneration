@@ -9,8 +9,33 @@ namespace MazeGeneration
 {
     class DepthFirstSearch
     {
+        /// <summary>
+        /// Array of generated map
+        /// </summary>
         int[,] array;
+        
+        //**********************
+        //CONTROL PARAMETERS
+        //**********************
+
+        /// <summary>
+        /// Size of map
+        /// </summary>
         Point mapSize;
+
+        /// <summary>
+        /// Start cell of maze generation
+        /// </summary>
+        Point startCell;
+
+        /// <summary>
+        /// Controls the maze "direction" Default 0.5f
+        /// </summary>
+        public float horizontalIntencity = 0.5f;
+
+        /// <summary>
+        /// Todo PseudoRandom
+        /// </summary>
         Random rand = new Random();
 
         /// <summary>
@@ -21,8 +46,8 @@ namespace MazeGeneration
         /// <returns>Map array</returns>
         public int[,] Generate(Point mapSize, Point startCell)
         {
-            this.mapSize.X = mapSize.X;
-            this.mapSize.Y = mapSize.Y;
+            this.mapSize = mapSize;
+            this.startCell = startCell;
             array = new int[mapSize.X, mapSize.Y];
 
             setCell(startCell);
@@ -37,37 +62,21 @@ namespace MazeGeneration
         void setCell(Point cell)
         {
             array[cell.X, cell.Y] = 1;
+            List<Point> neigbours = fillNeigbourListRandomly(cell);
 
-            List<Point> neigbours = new List<Point>();
-            neigbours.Add(new Point(cell.X - 1, cell.Y));
-            neigbours.Add(new Point(cell.X + 1, cell.Y));
-            neigbours.Add(new Point(cell.X, cell.Y - 1));
-            neigbours.Add(new Point(cell.X, cell.Y + 1));
-
-            //Todo Suffle List - Based on vertical / horizontal maze intenisty
-             //Go List Trough ->
-             
             //Todo Change checkCell to look Xcount cells forward.
 
-            while (neigbours.Count > 0)
+            for(int i = 0; i < neigbours.Count; i++)
             {
-                int rnd = rand.Next(0, neigbours.Count);
-
-                if (checkCell(neigbours[rnd], cell) == 0)
+                if (checkCell(neigbours[i], cell) == 1)
                 {
-                    neigbours.RemoveAt(rnd);
-                }
-                else if (checkCell(neigbours[rnd], cell) == 1)
-                {
-                    array[neigbours[rnd].X,neigbours[rnd].Y] = 1;
+                    array[neigbours[i].X,neigbours[i].Y] = 1;
 
-                    int x = neigbours[rnd].X - cell.X;
-                    int y = neigbours[rnd].Y - cell.Y;
+                    int x = neigbours[i].X - cell.X;
+                    int y = neigbours[i].Y - cell.Y;
 
-                    if (neigbours[rnd].X + x >= 0 && neigbours[rnd].X + x < mapSize.X && neigbours[rnd].Y + y >= 0 && neigbours[rnd].Y + y < mapSize.Y)
-                        setCell(new Point(neigbours[rnd].X + x, neigbours[rnd].Y + y));
-                    else
-                        neigbours.RemoveAt(rnd);
+                    if (neigbours[i].X + x >= 0 && neigbours[i].X + x < mapSize.X && neigbours[i].Y + y >= 0 && neigbours[i].Y + y < mapSize.Y)
+                        setCell(new Point(neigbours[i].X + x, neigbours[i].Y + y));
                 }
             }
         }
@@ -108,6 +117,40 @@ namespace MazeGeneration
                 return 0;
             }
         }
-    
+
+        /// <summary>
+        /// Fills list of neighbours randomly
+        /// </summary>
+        /// <param name="cell"></param>
+        /// <returns></returns>
+        List<Point> fillNeigbourListRandomly(Point cell)
+        {
+            List<Point> list = new List<Point>();
+            list.Add(new Point(cell.X - 1, cell.Y));
+            list.Add(new Point(cell.X + 1, cell.Y));
+            list.Add(new Point(cell.X, cell.Y - 1));
+            list.Add(new Point(cell.X, cell.Y + 1));
+            List<Point> neighbours = new List<Point>();
+
+            while (!neighbours.Contains(list[0]) || !neighbours.Contains(list[1]) || !neighbours.Contains(list[2]) || !neighbours.Contains(list[3]))
+            {
+                if ((rand.Next(0, 100) / 100.0f) < horizontalIntencity)
+                {
+                    if (rand.Next(0, 2) == 0 && !neighbours.Contains(list[0]))
+                        neighbours.Add(list[0]);
+                    else if (!neighbours.Contains(list[1]))
+                        neighbours.Add(list[1]);
+                }
+                else
+                {
+                    if (rand.Next(0, 2) == 0 && !neighbours.Contains(list[2]))
+                        neighbours.Add(list[2]);
+                    else if (!neighbours.Contains(list[3]))
+                        neighbours.Add(list[3]);
+                }
+            }
+
+            return neighbours;
+        }
     }
 }
