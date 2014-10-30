@@ -5,3 +5,9 @@ C:\Users\Kaxxo\MazeGeneration\MazeGeneration\MazeGeneration\bin\Debug\MazeGenera
 C:\Users\Kaxxo\MazeGeneration\MazeGeneration\MazeGeneration\obj\Debug\MazeGeneration.csprojResolveAssemblyReference.cache
 C:\Users\Kaxxo\MazeGeneration\MazeGeneration\MazeGeneration\obj\Debug\MazeGeneration.exe
 C:\Users\Kaxxo\MazeGeneration\MazeGeneration\MazeGeneration\obj\Debug\MazeGeneration.pdb
+C:\Users\Jeejee\Documents\GitHub\MazeGeneration\MazeGeneration\MazeGeneration\bin\Debug\MazeGeneration.exe.config
+C:\Users\Jeejee\Documents\GitHub\MazeGeneration\MazeGeneration\MazeGeneration\obj\Debug\MazeGeneration.exe
+C:\Users\Jeejee\Documents\GitHub\MazeGeneration\MazeGeneration\MazeGeneration\obj\Debug\MazeGeneration.pdb
+C:\Users\Jeejee\Documents\GitHub\MazeGeneration\MazeGeneration\MazeGeneration\bin\Debug\MazeGeneration.exe
+C:\Users\Jeejee\Documents\GitHub\MazeGeneration\MazeGeneration\MazeGeneration\bin\Debug\MazeGeneration.pdb
+C:\Users\Jeejee\Documents\GitHub\MazeGeneration\MazeGeneration\MazeGeneration\obj\Debug\MazeGeneration.csprojResolveAssemblyReference.cache
