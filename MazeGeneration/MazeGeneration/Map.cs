@@ -20,9 +20,9 @@ namespace MazeGeneration
         int[,] mapArray;
 
         /// <summary>
-        /// Dictionary of used ASCII marks
+        /// "Tileset" in ASCII marks
         /// </summary>
-        string mapMarks = "#.|o:;____";
+        public string mapMarks = "#.|o:;____";
 
         /// <summary>
         /// Constuctor
@@ -33,9 +33,20 @@ namespace MazeGeneration
         {
             this.mapSizeX = mapSizeX; 
             this.mapSizeY = mapSizeY;
-            
+
+            mapArray = new int[mapSizeX, mapSizeY];
+
             DepthFirstSearch dpSearch = new DepthFirstSearch();
-            mapArray = dpSearch.Generate(new Point(mapSizeX, mapSizeY), new Point(1,1));
+            int[,] tempArray = dpSearch.Generate(new Point(mapSizeX - 2, mapSizeY - 2), new Point((mapSizeX - 2) / 2, (mapSizeY - 2) / 2));
+
+            //Adds Outer walls
+            for (int x = 1; x < mapSizeX - 1; x++)
+            {
+                for (int y = 1; y < mapSizeY - 1; y++)
+                {
+                    mapArray[x, y] = tempArray[x-1, y-1];
+                }
+            }
         }
 
         /// <summary>
@@ -47,7 +58,7 @@ namespace MazeGeneration
             {
                 for (int x = 0; x < mapSizeX; x++)
                 {
-                    Console.Write(mapMarks.Substring(mapArray[x, y],1) + "");
+                    Console.Write(mapMarks.Substring(mapArray[x, y],1));
                     
                     if (x == mapSizeX - 1)
                         Console.Write("\n");
