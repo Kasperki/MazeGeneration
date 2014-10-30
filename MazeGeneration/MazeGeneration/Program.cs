@@ -16,21 +16,21 @@ namespace MazeGeneration
             //TODO WELCOME MESSAGE - INFO
 
             //TODO LOOP WHILE EXIT COMMAND
-            //TODO ASK FOR SEED AND MAPSIZE
+            //TODO ASK FOR SEED, MAPSIZE, MAZE COMPLEXITY AND HORIZONTAL INFLUENCE.
  
             //PseudoRandom Test
             /*
-            int size = 10;
+            int size = 1000;
             PseudoRandom rand = new PseudoRandom(666);
             int[] luvut = new int[size];
             for (int i = 0; i < size ; i++)
             {
-                luvut[i] = rand.Next(1, 70);
-                Console.WriteLine(luvut[i]);
-            }
-            */
+                luvut[i] = rand.Next(0,100);
+                Console.Write(luvut[i]+",");
+            }*/
+            
 
-            Map map = new Map(60,30);
+            Map map = new Map(59, 31, 1337);
             map.printMap();
 
             

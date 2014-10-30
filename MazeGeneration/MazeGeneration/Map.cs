@@ -22,14 +22,15 @@ namespace MazeGeneration
         /// <summary>
         /// "Tileset" in ASCII marks
         /// </summary>
-        public string mapMarks = "#.|o:;____";
+        public string mapMarks = "#.SEoO(.)(.)";
 
         /// <summary>
         /// Constuctor
         /// </summary>
         /// <param name="x">Width of map</param>
         /// <param name="y">Height of map</param>
-        public Map(int mapSizeX,int mapSizeY)
+        /// <param name="seed">Seed of map</param>
+        public Map(int mapSizeX, int mapSizeY, int seed)
         {
             this.mapSizeX = mapSizeX; 
             this.mapSizeY = mapSizeY;
@@ -37,7 +38,7 @@ namespace MazeGeneration
             mapArray = new int[mapSizeX, mapSizeY];
 
             DepthFirstSearch dpSearch = new DepthFirstSearch();
-            int[,] tempArray = dpSearch.Generate(new Point(mapSizeX - 2, mapSizeY - 2), new Point((mapSizeX - 2) / 2, (mapSizeY - 2) / 2));
+            int[,] tempArray = dpSearch.Generate(new Point(mapSizeX - 2, mapSizeY - 2), new Point((mapSizeX - 2) / 2, (mapSizeY - 2) / 2), 3 ,seed);
 
             //Adds Outer walls
             for (int x = 1; x < mapSizeX - 1; x++)
