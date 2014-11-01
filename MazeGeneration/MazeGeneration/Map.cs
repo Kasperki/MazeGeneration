@@ -22,7 +22,7 @@ namespace MazeGeneration
         /// <summary>
         /// "Tileset" in ASCII marks
         /// </summary>
-        public string mapMarks = "#.SEoO(.)(.)";
+        public string mapMarks = "#..SEoO(.)(.)";
 
         /// <summary>
         /// Constuctor
@@ -39,7 +39,6 @@ namespace MazeGeneration
 
             DepthFirstSearch dpSearch = new DepthFirstSearch();
             int[,] tempArray = dpSearch.Generate(new Point(mapSizeX - 2, mapSizeY - 2), new Point((mapSizeX - 2) / 2, (mapSizeY - 2) / 2), 3 ,seed);
-
             //Adds Outer walls
             for (int x = 1; x < mapSizeX - 1; x++)
             {

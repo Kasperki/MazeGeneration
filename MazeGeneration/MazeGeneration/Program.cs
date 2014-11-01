@@ -30,7 +30,7 @@ namespace MazeGeneration
             }*/
             
 
-            Map map = new Map(59, 31, 1337);
+            Map map = new Map(75, 45, 1339);
             map.printMap();
 
             

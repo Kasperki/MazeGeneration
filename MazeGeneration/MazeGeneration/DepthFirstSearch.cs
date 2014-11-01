@@ -34,9 +34,19 @@ namespace MazeGeneration
         public float horizontalIntencity = 0.5f;
 
         /// <summary>
+        /// Controls room generation intencity
+        /// </summary>
+        public float roomIntencity = 0.04f;
+        
+        /// <summary>
         /// Controls the minium lenght of maze -> Complexity of maze
         /// </summary>
-        public int corridorMinLenght = 2;
+        public int corridorMinLength = 2;
+
+        /// <summary>
+        /// Controls do we generate rooms on maze
+        /// </summary>
+        public bool generateRooms = true;
 
         /// <summary>
         /// PseudoRandom
@@ -50,11 +60,11 @@ namespace MazeGeneration
         /// <param name="startCell">Start cell</param>
         /// <param name="seed">Seed of map</param>
         /// <returns>Map array</returns>
-        public int[,] Generate(Point mapSize, Point startCell, int corridorMinLenght, int seed)
+        public int[,] Generate(Point mapSize, Point startCell, int corridorMinLength, int seed)
         {
             this.mapSize = mapSize;
             this.startCell = startCell;
-            this.corridorMinLenght = corridorMinLenght;
+            this.corridorMinLength = corridorMinLength;
             
             array = new int[mapSize.X, mapSize.Y];
 
@@ -66,7 +76,7 @@ namespace MazeGeneration
         }
 
         /// <summary>
-        /// Sets cell to floor
+        /// Sets cell to floor recursive
         /// </summary>
         /// <param name="cell">Coorinates of cell</param>
         void setCell(Point cell)
@@ -76,30 +86,58 @@ namespace MazeGeneration
 
             for(int i = 0; i < neigbours.Count; i++)
             {
-                //Todo Use this old check cell if CorridorminLengt == 1
-                /*if (checkCell(neigbours[i], cell))
+                //CorridoorMinLenght = 1
+                if (corridorMinLength == 1)
                 {
-                    array[neigbours[i].X,neigbours[i].Y] = 1;
-
-                    int x = neigbours[i].X - cell.X;
-                    int y = neigbours[i].Y - cell.Y;
-
-                    if (neigbours[i].X + x >= 0 && neigbours[i].X + x < mapSize.X && neigbours[i].Y + y >= 0 && neigbours[i].Y + y < mapSize.Y)
-                        setCell(new Point(neigbours[i].X + x, neigbours[i].Y + y));
-                }*/
-
-                if (checkCell(neigbours[i], cell, corridorMinLenght))
-                {
-                    int x = neigbours[i].X - cell.X;
-                    int y = neigbours[i].Y - cell.Y;
-
-                    for (int j = 1; j <= corridorMinLenght; j++)
+                    if (checkCell(neigbours[i], cell))
                     {
-                        array[cell.X + x * j, cell.Y + y * j] = 1;
+                        array[neigbours[i].X, neigbours[i].Y] = 1;
 
-                        if (j == corridorMinLenght)
-                            setCell(new Point(cell.X + x * j, cell.Y + y * j));
+                        int x = neigbours[i].X - cell.X;
+                        int y = neigbours[i].Y - cell.Y;
+
+                        if (neigbours[i].X + x >= 0 && neigbours[i].X + x < mapSize.X && neigbours[i].Y + y >= 0 && neigbours[i].Y + y < mapSize.Y)
+                            setCell(new Point(neigbours[i].X + x, neigbours[i].Y + y));
                     }
+                }
+                //CorridoorMinLength > 1
+                else
+                {
+                    if (checkCell(neigbours[i], cell, corridorMinLength))
+                    {
+                        int x = neigbours[i].X - cell.X;
+                        int y = neigbours[i].Y - cell.Y;
+
+                        //Generate rooms
+                        if (generateRooms && (pseudoRand.Next(0,100) / 100.0f) < roomIntencity)
+                            setRoom(cell,pseudoRand.Next(3,8),pseudoRand.Next(3,8));
+
+                        for (int j = 1; j <= corridorMinLength; j++)
+                        {
+                            array[cell.X + x * j, cell.Y + y * j] = 1;
+
+                            if (j == corridorMinLength)
+                                setCell(new Point(cell.X + x * j, cell.Y + y * j));
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates room
+        /// </summary>
+        /// <param name="startCell">start cell of room</param>
+        /// <param name="width">width of room</param>
+        /// <param name="heigth">height of room</param>
+        void setRoom(Point startCell, int width, int heigth)
+        {
+            for (int x = startCell.X; x < startCell.X + width; x++)
+            {
+                for (int y = startCell.Y; y < startCell.Y + heigth; y++)
+                {
+                    if (x >= 0 && x < mapSize.X && y >= 0 && y < mapSize.Y)
+                        array[x, y] = 2;
                 }
             }
         }

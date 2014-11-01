@@ -1,0 +1,6 @@
+C:\Users\Kaxxo\MazeGeneration\MazeGeneration\MazeGeneration\bin\Release\MazeGeneration.exe.config
+C:\Users\Kaxxo\MazeGeneration\MazeGeneration\MazeGeneration\bin\Release\MazeGeneration.exe
+C:\Users\Kaxxo\MazeGeneration\MazeGeneration\MazeGeneration\bin\Release\MazeGeneration.pdb
+C:\Users\Kaxxo\MazeGeneration\MazeGeneration\MazeGeneration\obj\Release\MazeGeneration.exe
+C:\Users\Kaxxo\MazeGeneration\MazeGeneration\MazeGeneration\obj\Release\MazeGeneration.pdb
+C:\Users\Kaxxo\MazeGeneration\MazeGeneration\MazeGeneration\obj\Release\MazeGeneration.csprojResolveAssemblyReference.cache
