@@ -31,7 +31,7 @@ namespace MazeGeneration
                 Console.Clear();
 
                 // LABYRINT DETAILS
-                Console.WriteLine("Enter a seed value:");
+                Console.WriteLine("Enter a seed value:"); //NEED TRY AND CATCH(Exception e) not int!! Tai Flush Console?
                 seed = int.Parse(Console.ReadLine());
                 Console.WriteLine("Enter a height of the labyrint:");
                 height = int.Parse(Console.ReadLine());
@@ -62,33 +62,10 @@ namespace MazeGeneration
                         Console.Write("Wrong value, please try again.");
                         loop = true;
                     } 
-               }
+               } 
+               
                 loop = true;
-            }
-
-            
-            //TODO LOOP WHILE EXIT COMMAND
-            //TODO ASK FOR SEED, MAPSIZE, MAZE COMPLEXITY AND HORIZONTAL INFLUENCE.
- 
-            //PseudoRandom Test
-            /*
-            int size = 1000;
-            PseudoRandom rand = new PseudoRandom(666);
-            int[] luvut = new int[size];
-            for (int i = 0; i < size ; i++)
-            {
-                luvut[i] = rand.Next(0,100);
-                Console.Write(luvut[i]+",");
-            }*/
-            
-
-<<<<<<< HEAD
-=======
-            Map map = new Map(75, 45, 1339);
-            map.printMap();
->>>>>>> origin/master
-
-             
+            }            
         }
     }
 }
