@@ -36,7 +36,7 @@ namespace MazeGeneration
         /// <summary>
         /// Controls the minium lenght of maze -> Complexity of maze
         /// </summary>
-        public int corridorMinLength = 2;
+        public int corridorMinLength = 3;
 
         /// <summary>
         /// Controls the minium width of walls -> Complexity of maze
@@ -59,7 +59,7 @@ namespace MazeGeneration
             }
         }
 
-        private int _wallWidth = 3;
+        private int _wallWidth = 5;
 
         /// <summary>
         /// Controls the width of corridor
@@ -79,7 +79,7 @@ namespace MazeGeneration
             }
         }
 
-        private int _corridorWidth = 3;
+        private int _corridorWidth = 2;
 
         /// <summary>
         /// Controls do we generate rooms on maze

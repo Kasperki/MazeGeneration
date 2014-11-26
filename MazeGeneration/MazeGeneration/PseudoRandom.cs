@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MazeGeneration
 {
-    class PseudoRandom
+    public class PseudoRandom
     {
         private int seed;
         private int M = 2147483647;
@@ -41,6 +41,12 @@ namespace MazeGeneration
         /// <param name="max"></param>
         public int Next(int min, int max)
         {
+            if (min > max)
+                throw new ArgumentOutOfRangeException("min is larger than max");
+
+            if (min < 0 || max < 0)
+                throw new ArgumentOutOfRangeException("parameter can't be negative");
+
             return min + (Next() % (max - min));
         }
     }

@@ -16,7 +16,6 @@ namespace MazeGeneration
             bool loop = true;
             int seed = 0, height = 0, width = 0;
             //TODO WELCOME MESSAGE - INFO
-
             Console.WriteLine("********************************************************************************");
             Console.WriteLine("****                           LABYRINT CREATOR                             ****");
             Console.WriteLine("********************************************************************************");
@@ -29,7 +28,6 @@ namespace MazeGeneration
             while (option == 'E')
             {
                 Console.Clear();
-
                 // LABYRINT DETAILS
                 Console.WriteLine("Enter a seed value:"); //NEED TRY AND CATCH(Exception e) not int!! Tai Flush Console?
                 seed = int.Parse(Console.ReadLine());
