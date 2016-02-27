@@ -6,19 +6,35 @@ namespace MazeGeneration
     class Map
     {
         /// <summary>
-        /// Map size values
+        /// MapSizeX
         /// </summary>
-        int mapSizeX, mapSizeY;
-        
+        protected int mapSizeX
+        {
+            get { return mapArray.GetLength(0); }
+        }
+
+        /// <summary>
+        /// MapSizeY
+        /// </summary>
+        protected int mapSizeY
+        {
+            get { return mapArray.GetLength(1); }
+        }
+
         /// <summary>
         /// Array containing map data
         /// </summary>
-        int[,] mapArray;
+        protected int[,] mapArray;
 
         /// <summary>
         /// "Tileset" in ASCII marks
         /// </summary>
-        public string mapMarks = "#..SEoO(.)(.)";
+        private const string MapString = "#.+.E";
+
+        /// <summary>
+        /// PseudoRandom
+        /// </summary>
+        protected PseudoRandom pseudoRand;
 
         /// <summary>
         /// Constuctor
@@ -28,22 +44,8 @@ namespace MazeGeneration
         /// <param name="seed">Seed of map</param>
         public Map(int mapSizeX, int mapSizeY, int seed)
         {
-            this.mapSizeX = mapSizeX; 
-            this.mapSizeY = mapSizeY;
-
             mapArray = new int[mapSizeX, mapSizeY];
-
-            DepthFirstSearch dpSearch = new DepthFirstSearch();
-            int[,] tempArray = dpSearch.Generate(new Point(mapSizeX - 2, mapSizeY - 2), new Point((mapSizeX - 2) / 2, (mapSizeY - 2) / 2), seed);
-            
-            //Adds Outer walls
-            for (int x = 1; x < mapSizeX - 1; x++)
-            {
-                for (int y = 1; y < mapSizeY - 1; y++)
-                {
-                    mapArray[x, y] = tempArray[x-1, y-1];
-                }
-            }
+            pseudoRand = new PseudoRandom(seed);
         }
 
         /// <summary>
@@ -55,7 +57,7 @@ namespace MazeGeneration
             {
                 for (int x = 0; x < mapSizeX; x++)
                 {
-                    Console.Write(mapMarks.Substring(mapArray[x, y],1));
+                    Console.Write(MapString.Substring(mapArray[x, y], 1));
                     
                     if (x == mapSizeX - 1)
                         Console.Write("\n");

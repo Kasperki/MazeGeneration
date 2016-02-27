@@ -4,7 +4,10 @@ using System.Drawing;
 
 namespace MazeGeneration
 {
-    class DepthFirstSearch
+    /// <summary>
+    /// Generates mazes
+    /// </summary>
+    class DepthFirstSearch : Map
     {
         /// <summary>
         /// Array of generated map
@@ -28,12 +31,12 @@ namespace MazeGeneration
         /// <summary>
         /// Controls the maze "direction" Default 0.5f
         /// </summary>
-        public float horizontalIntencity = 0.5f;
+        public float HorizontalIntencity = 0.5f;
 
         /// <summary>
         /// Controls the minium lenght of maze -> Complexity of maze
         /// </summary>
-        public int corridorMinLength = 3;
+        public int CorridorMinLength = 3;
 
         /// <summary>
         /// Controls the minium width of walls -> Complexity of maze
@@ -94,15 +97,19 @@ namespace MazeGeneration
         private const int MinRoomHeigth = 3;
         private const int MaxRoomHeigth = 8;
 
-        //generation ids
-        private const int Wallid = 0;
-        private const int Corridoorid = 1;
-        private const int Roomid = 2;
+        public DepthFirstSearch(int mapSizeX, int mapSizeY, int seed) : base(mapSizeX, mapSizeY, seed)
+        {
+            int[,] tempArray = Generate(new Point(mapSizeX - 2, mapSizeY - 2), new Point((mapSizeX - 2) / 2, (mapSizeY - 2) / 2), seed);
 
-        /// <summary>
-        /// PseudoRandom
-        /// </summary>
-        private PseudoRandom pseudoRand;
+            //Adds Outer walls
+            for (int x = 1; x < mapSizeX - 1; x++)
+            {
+                for (int y = 1; y < mapSizeY - 1; y++)
+                {
+                    mapArray[x, y] = tempArray[x - 1, y - 1];
+                }
+            }
+        }
 
         /// <summary>
         /// Generates map
@@ -115,7 +122,7 @@ namespace MazeGeneration
         {
             this.mapSize = mapSize;
             this.startCell = startCell;
-            
+
             array = new int[mapSize.X, mapSize.Y];
 
             pseudoRand = new PseudoRandom(seed);
@@ -131,17 +138,17 @@ namespace MazeGeneration
         /// <param name="cell">Coorinates of cell</param>
         void SetCell(Point cell,int xLast = 0,int yLast = 0)
         {
-            array[cell.X, cell.Y] = Corridoorid;
+            array[cell.X, cell.Y] = (int)TileType.Corridoor;
             List<Point> neigbours = FillNeigbourListRandomly(cell, xLast, yLast);
 
             for(int i = 0; i < neigbours.Count; i++)
             {
                 //CorridoorMinLenght = 1
-                if (corridorMinLength == 1)
+                if (CorridorMinLength == 1)
                 {
                     if (CheckCell(neigbours[i], cell))
                     {
-                        array[neigbours[i].X, neigbours[i].Y] = Corridoorid;
+                        array[neigbours[i].X, neigbours[i].Y] = (int)TileType.Corridoor;
 
                         int x = neigbours[i].X - cell.X;
                         int y = neigbours[i].Y - cell.Y;
@@ -153,7 +160,7 @@ namespace MazeGeneration
                 //CorridoorMinLength > 1
                 else
                 {
-                    if (CheckCell(neigbours[i], cell, corridorMinLength, wallWidth))
+                    if (CheckCell(neigbours[i], cell, CorridorMinLength, wallWidth))
                     {
                         int x = neigbours[i].X - cell.X;
                         int y = neigbours[i].Y - cell.Y;
@@ -175,14 +182,14 @@ namespace MazeGeneration
                         if (GenerateRooms && (pseudoRand.Next(0,100) / 100.0f) < RoomIntencity)
                             SetRoom(cell,pseudoRand.Next(MinRoomWidth,MaxRoomWidth),pseudoRand.Next(MinRoomHeigth,MaxRoomHeigth));
 
-                        for (int j = 1; j <= corridorMinLength; j++)
+                        for (int j = 1; j <= CorridorMinLength; j++)
                         {
                             for (int width = 0; width < corridorWidth; width++)
                             {
-                                array[cell.X + x * j + xlarge * width, cell.Y + y * j + ylarge * width] = Corridoorid;
+                                array[cell.X + x * j + xlarge * width, cell.Y + y * j + ylarge * width] = (int)TileType.Corridoor;
                             }
                             
-                            if (j == corridorMinLength)
+                            if (j == CorridorMinLength)
                                 SetCell(new Point(cell.X + x * j, cell.Y + y * j),xlarge,ylarge);
                         }
                     }
@@ -203,7 +210,7 @@ namespace MazeGeneration
                 for (int y = startCell.Y; y < startCell.Y + heigth; y++)
                 {
                     if (x >= 0 && x < mapSize.X && y >= 0 && y < mapSize.Y)
-                        array[x, y] = Roomid;
+                        array[x, y] = (int)TileType.Room;
                 }
             }
         }
@@ -312,7 +319,7 @@ namespace MazeGeneration
 
             while (!neighbours.Contains(list[0]) || !neighbours.Contains(list[1]) || !neighbours.Contains(list[2]) || !neighbours.Contains(list[3]))
             {
-                if ((pseudoRand.Next(0, 100) / 100.0f) < horizontalIntencity)
+                if ((pseudoRand.Next(0, 100) / 100.0f) < HorizontalIntencity)
                 {
                     if (pseudoRand.Next(0, 2) == 0 && !neighbours.Contains(list[0]))
                         neighbours.Add(list[0]);
