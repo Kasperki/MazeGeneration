@@ -1,0 +1,8 @@
+language: csharp
+solution: MazeGeneration.sln
+install:
+  - nuget restore MazeGeneration.sln
+  - nuget install NUnit.Runners -Version 3.0 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Release MazeGeneration.sln
+  - mono ./testrunner/NUnit.Runners.3.0/tools/nunit-console.exe ./MazeGenerationTest/bin/Release/MazeGenerationTest.dll

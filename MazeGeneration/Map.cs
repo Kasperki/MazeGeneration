@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 
 namespace MazeGeneration
 {
@@ -29,7 +28,7 @@ namespace MazeGeneration
         /// <summary>
         /// "Tileset" in ASCII marks
         /// </summary>
-        private const string MapString = "#.+.E";
+        private const string MapString = "#...E";
 
         /// <summary>
         /// PseudoRandom
@@ -51,7 +50,7 @@ namespace MazeGeneration
         /// <summary>
         /// Prints map to console output using mapMarks 
         /// </summary>
-        public void printMap()
+        public void PrintMap()
         {
             for (int y = 0; y < mapSizeY; y++)
             {

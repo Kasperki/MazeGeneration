@@ -13,6 +13,7 @@ namespace MazeGeneration
         private int M = 2147483647;
         private int A = 16807;
         private int Q, R;
+
         /// <summary>
         /// Constructor, insert a seed value
         /// </summary>

@@ -59,7 +59,7 @@ namespace MazeGeneration
             }
         }
 
-        private int wallWidth = 5;
+        private int wallWidth = 3;
 
         /// <summary>
         /// Controls the width of corridor
@@ -79,7 +79,7 @@ namespace MazeGeneration
             }
         }
 
-        private int corridorWidth = 2;
+        private int corridorWidth = 1;
 
         /// <summary>
         /// Controls do we generate rooms on maze

@@ -1,13 +1,14 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
+using Assert = NUnit.Framework.Assert;
 using MazeGeneration;
 
 namespace MazeGenerationTest
 {
-    [TestClass]
+    [TestFixture]
     public class PseudoRandomTest
     {
-        [TestMethod]
+        [Test]
         public void Next_Should_Return_Number_Between_Min_Max()
         {
             PseudoRandom pseudoRandom = new PseudoRandom(0);
@@ -35,8 +36,7 @@ namespace MazeGenerationTest
             }
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void Next_Should_Throw_Exception_If_Min_Or_Max_Is_Negative()
         {
             PseudoRandom pseudoRandom = new PseudoRandom(0);
@@ -44,14 +44,10 @@ namespace MazeGenerationTest
             int minCount = -5;
             int maxCount = -1;
 
-            int actualCount = pseudoRandom.Next(minCount, maxCount);
-
-            Assert.IsTrue(actualCount >= minCount);
-            Assert.IsTrue(actualCount < maxCount);
+            Assert.That(() => pseudoRandom.Next(minCount, maxCount), Throws.TypeOf<ArgumentOutOfRangeException>());
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [Test]
         public void Next_Should_Throw_Exception_If_Min_Is_Greater_Than_Max()
         {
             PseudoRandom pseudoRandom = new PseudoRandom(0);
@@ -59,10 +55,10 @@ namespace MazeGenerationTest
             int minCount = 5;
             int maxCount = 0;
 
-            pseudoRandom.Next(minCount, maxCount);
+            Assert.That(() => pseudoRandom.Next(minCount, maxCount), Throws.TypeOf<ArgumentOutOfRangeException>());
         }
 
-        [TestMethod]
+        [Test]
         public void Next_Should_Return_Same_Numbers_On_Same_Seed()
         {
             int seed = 1337;

@@ -28,15 +28,15 @@ namespace MazeGeneration
                 int width = int.Parse(Console.ReadLine());
 
                 // LABYRINT PRINT
-                Map map = new DepthFirstSearch(width, height, seed);
-                map.printMap();
+                //Map map = new DepthFirstSearch(width, height, seed);
+                //map.printMap();
 
                 for (int i = 0; i < width; i++) { Console.Write("_"); }
                 Console.Write("\n");
                 
                 // CAVE PRINT
                 Map map2 = new CelluralAutomata(width, height, seed);
-                map2.printMap();
+                map2.PrintMap();
 
                 // NEW LABYRINT
                 while (true)
