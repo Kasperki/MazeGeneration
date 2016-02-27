@@ -5,4 +5,4 @@ install:
   - nuget install NUnit.Runners -Version 3.0 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=Release MazeGeneration.sln
-  - mono ./testrunner/NUnit.Runners.3.0.0/tools/nunit3-console.exe ./MazeGenerationTest/bin/Release/MazeGenerationTest.dll
+  - mono ./testrunner/NUnit.Console.3.0.0/tools/nunit3-console.exe ./MazeGenerationTest/bin/Release/MazeGenerationTest.dll
