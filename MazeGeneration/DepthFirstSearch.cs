@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 namespace MazeGeneration
@@ -12,7 +9,7 @@ namespace MazeGeneration
         /// <summary>
         /// Array of generated map
         /// </summary>
-        int[,] array;
+        private int[,] array;
         
         //**********************
         //CONTROL PARAMETERS
@@ -21,12 +18,12 @@ namespace MazeGeneration
         /// <summary>
         /// Size of map
         /// </summary>
-        Point mapSize;
+        private Point mapSize;
 
         /// <summary>
         /// Start cell of maze generation
         /// </summary>
-        Point startCell;
+        private Point startCell;
 
         /// <summary>
         /// Controls the maze "direction" Default 0.5f
@@ -41,71 +38,71 @@ namespace MazeGeneration
         /// <summary>
         /// Controls the minium width of walls -> Complexity of maze
         /// </summary>
-        public int wallWidth
+        public int WallWidth
         {
             get
             {
-                return _wallWidth;
+                return wallWidth;
             }
             set
             {
-                if (value < corridorWidth)
-                    _wallWidth = corridorWidth;
+                if (value < CorridorWidth)
+                    wallWidth = CorridorWidth;
                 else
-                    _wallWidth = value;
+                    wallWidth = value;
 
                 if (value <= 0)
-                    _wallWidth = 1;
+                    wallWidth = 1;
             }
         }
 
-        private int _wallWidth = 5;
+        private int wallWidth = 5;
 
         /// <summary>
         /// Controls the width of corridor
         /// </summary>
-        public int corridorWidth   
+        public int CorridorWidth   
         {
             get
             {
-                return _corridorWidth;
+                return corridorWidth;
             }
             set
             {
                 if (value <= 0)
-                    _corridorWidth = 1;
+                    corridorWidth = 1;
                 else
-                    _corridorWidth = value;
+                    corridorWidth = value;
             }
         }
 
-        private int _corridorWidth = 2;
+        private int corridorWidth = 2;
 
         /// <summary>
         /// Controls do we generate rooms on maze
         /// </summary>
-        public bool generateRooms = true;
+        public bool GenerateRooms = true;
 
         /// <summary>
         /// Controls room generation intencity
         /// </summary>
-        public float roomIntencity = 0.05f;
+        public float RoomIntencity = 0.05f;
         
-        //Control rooms size
-        private int minRoomWidth = 3;
-        private int maxRoomWidth = 8;
-        private int minRoomHeigth = 3;
-        private int maxRoomHeigth = 8;
+        //Room Size
+        private const int MinRoomWidth = 3;
+        private const int MaxRoomWidth = 8;
+        private const int MinRoomHeigth = 3;
+        private const int MaxRoomHeigth = 8;
 
         //generation ids
-        //private int wallid = 0;
-        private int corridoorid = 1;
-        private int roomid = 2;
+        private const int Wallid = 0;
+        private const int Corridoorid = 1;
+        private const int Roomid = 2;
 
         /// <summary>
         /// PseudoRandom
         /// </summary>
-        PseudoRandom pseudoRand;
+        private PseudoRandom pseudoRand;
 
         /// <summary>
         /// Generates map
@@ -114,7 +111,7 @@ namespace MazeGeneration
         /// <param name="startCell">Start cell</param>
         /// <param name="seed">Seed of map</param>
         /// <returns>Map array</returns>
-        public int[,] Generate(Point mapSize, Point startCell, int corridorMinLength, int seed)
+        public int[,] Generate(Point mapSize, Point startCell, int seed)
         {
             this.mapSize = mapSize;
             this.startCell = startCell;
@@ -123,7 +120,7 @@ namespace MazeGeneration
 
             pseudoRand = new PseudoRandom(seed);
 
-            setCell(startCell);
+            SetCell(startCell);
 
             return array;
         }
@@ -132,31 +129,31 @@ namespace MazeGeneration
         /// Sets cell to floor recursive
         /// </summary>
         /// <param name="cell">Coorinates of cell</param>
-        void setCell(Point cell,int xLast = 0,int yLast = 0)
+        void SetCell(Point cell,int xLast = 0,int yLast = 0)
         {
-            array[cell.X, cell.Y] = corridoorid;
-            List<Point> neigbours = fillNeigbourListRandomly(cell, xLast, yLast);
+            array[cell.X, cell.Y] = Corridoorid;
+            List<Point> neigbours = FillNeigbourListRandomly(cell, xLast, yLast);
 
             for(int i = 0; i < neigbours.Count; i++)
             {
                 //CorridoorMinLenght = 1
                 if (corridorMinLength == 1)
                 {
-                    if (checkCell(neigbours[i], cell))
+                    if (CheckCell(neigbours[i], cell))
                     {
-                        array[neigbours[i].X, neigbours[i].Y] = corridoorid;
+                        array[neigbours[i].X, neigbours[i].Y] = Corridoorid;
 
                         int x = neigbours[i].X - cell.X;
                         int y = neigbours[i].Y - cell.Y;
 
                         if (neigbours[i].X + x >= 0 && neigbours[i].X + x < mapSize.X && neigbours[i].Y + y >= 0 && neigbours[i].Y + y < mapSize.Y)
-                            setCell(new Point(neigbours[i].X + x, neigbours[i].Y + y));
+                            SetCell(new Point(neigbours[i].X + x, neigbours[i].Y + y));
                     }
                 }
                 //CorridoorMinLength > 1
                 else
                 {
-                    if (checkCell(neigbours[i], cell, corridorMinLength, _wallWidth))
+                    if (CheckCell(neigbours[i], cell, corridorMinLength, wallWidth))
                     {
                         int x = neigbours[i].X - cell.X;
                         int y = neigbours[i].Y - cell.Y;
@@ -175,18 +172,18 @@ namespace MazeGeneration
                             ylarge = 1;
 
                         //Generate rooms
-                        if (generateRooms && (pseudoRand.Next(0,100) / 100.0f) < roomIntencity)
-                            setRoom(cell,pseudoRand.Next(minRoomWidth,maxRoomWidth),pseudoRand.Next(minRoomHeigth,maxRoomHeigth));
+                        if (GenerateRooms && (pseudoRand.Next(0,100) / 100.0f) < RoomIntencity)
+                            SetRoom(cell,pseudoRand.Next(MinRoomWidth,MaxRoomWidth),pseudoRand.Next(MinRoomHeigth,MaxRoomHeigth));
 
                         for (int j = 1; j <= corridorMinLength; j++)
                         {
-                            for (int width = 0; width < _corridorWidth; width++)
+                            for (int width = 0; width < corridorWidth; width++)
                             {
-                                array[cell.X + x * j + xlarge * width, cell.Y + y * j + ylarge * width] = corridoorid;
+                                array[cell.X + x * j + xlarge * width, cell.Y + y * j + ylarge * width] = Corridoorid;
                             }
                             
                             if (j == corridorMinLength)
-                                setCell(new Point(cell.X + x * j, cell.Y + y * j),xlarge,ylarge);
+                                SetCell(new Point(cell.X + x * j, cell.Y + y * j),xlarge,ylarge);
                         }
                     }
                 }
@@ -199,14 +196,14 @@ namespace MazeGeneration
         /// <param name="startCell">start cell of room</param>
         /// <param name="width">width of room</param>
         /// <param name="heigth">height of room</param>
-        void setRoom(Point startCell, int width, int heigth)
+        private void SetRoom(Point startCell, int width, int heigth)
         {
             for (int x = startCell.X; x < startCell.X + width; x++)
             {
                 for (int y = startCell.Y; y < startCell.Y + heigth; y++)
                 {
                     if (x >= 0 && x < mapSize.X && y >= 0 && y < mapSize.Y)
-                        array[x, y] = roomid;
+                        array[x, y] = Roomid;
                 }
             }
         }
@@ -218,7 +215,7 @@ namespace MazeGeneration
         /// <param name="origin"></param>
         /// <param name="forward">How many cells forward to check</param>
         /// <returns>Returns true if available, false if not</returns>
-        bool checkCell(Point cell, Point origin, int forward, int wallWidth)
+        private bool CheckCell(Point cell, Point origin, int forward, int wallWidth)
         {
             int x = cell.X - origin.X;
             int y = cell.Y - origin.Y;
@@ -260,7 +257,7 @@ namespace MazeGeneration
        /// <param name="cell">Cell to check</param>
        /// <param name="origin">Parent cell</param>
        /// <returns>Returns true if available, false if not</returns>
-        bool checkCell(Point cell, Point origin)
+        private bool CheckCell(Point cell, Point origin)
         {
             if (cell.X >= 0 && cell.X < mapSize.X && cell.Y >= 0 && cell.Y < mapSize.Y)
             {
@@ -285,10 +282,8 @@ namespace MazeGeneration
 
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         /// <summary>
@@ -296,7 +291,7 @@ namespace MazeGeneration
         /// </summary>
         /// <param name="cell">Cells neighbours</param>
         /// <returns></returns>
-        List<Point> fillNeigbourListRandomly(Point cell,int x = 0,int y = 0)
+        private List<Point> FillNeigbourListRandomly(Point cell, int x = 0, int y = 0)
         {
             List<Point> list = new List<Point>();
             list.Add(new Point(cell.X - 1, cell.Y));
@@ -304,14 +299,14 @@ namespace MazeGeneration
             if(x == 0)
                 list.Add(new Point(cell.X + 1, cell.Y));
             else
-                list.Add(new Point(cell.X + _corridorWidth, cell.Y));
+                list.Add(new Point(cell.X + corridorWidth, cell.Y));
 
             list.Add(new Point(cell.X, cell.Y - 1));
 
             if (y == 0)
                 list.Add(new Point(cell.X, cell.Y + 1));
             else
-                list.Add(new Point(cell.X, cell.Y + _corridorWidth));
+                list.Add(new Point(cell.X, cell.Y + corridorWidth));
 
             List<Point> neighbours = new List<Point>();
 

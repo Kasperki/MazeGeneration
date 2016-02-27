@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Drawing;
 
 namespace MazeGeneration
@@ -38,7 +34,8 @@ namespace MazeGeneration
             mapArray = new int[mapSizeX, mapSizeY];
 
             DepthFirstSearch dpSearch = new DepthFirstSearch();
-            int[,] tempArray = dpSearch.Generate(new Point(mapSizeX - 2, mapSizeY - 2), new Point((mapSizeX - 2) / 2, (mapSizeY - 2) / 2), 2 ,seed);
+            int[,] tempArray = dpSearch.Generate(new Point(mapSizeX - 2, mapSizeY - 2), new Point((mapSizeX - 2) / 2, (mapSizeY - 2) / 2), seed);
+            
             //Adds Outer walls
             for (int x = 1; x < mapSizeX - 1; x++)
             {
