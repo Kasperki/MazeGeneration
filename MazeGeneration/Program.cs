@@ -19,6 +19,7 @@ namespace MazeGeneration
             while (option == 'E')
             {
                 Console.Clear();
+
                 // LABYRINT DETAILS
                 Console.WriteLine("Enter a seed value:"); //NEED TRY AND CATCH(Exception e) not int!
                 int seed = int.Parse(Console.ReadLine());
@@ -28,12 +29,9 @@ namespace MazeGeneration
                 int width = int.Parse(Console.ReadLine());
 
                 // LABYRINT PRINT
-                //Map map = new DepthFirstSearch(width, height, seed);
-                //map.printMap();
+                Map map = new DepthFirstSearch(width, height, seed);
+                map.PrintMap();
 
-                for (int i = 0; i < width; i++) { Console.Write("_"); }
-                Console.Write("\n");
-                
                 // CAVE PRINT
                 Map map2 = new CelluralAutomata(width, height, seed);
                 map2.PrintMap();

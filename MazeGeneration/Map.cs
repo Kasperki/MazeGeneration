@@ -48,7 +48,7 @@ namespace MazeGeneration
         }
 
         /// <summary>
-        /// Prints map to console output using mapMarks 
+        /// Prints map to console output using MapString 
         /// </summary>
         public void PrintMap()
         {
@@ -62,6 +62,9 @@ namespace MazeGeneration
                         Console.Write("\n");
                 }
             }
+
+            for (int i = 0; i < mapSizeX; i++) { Console.Write("_"); }
+            Console.Write("\n");
         }
 
     }
